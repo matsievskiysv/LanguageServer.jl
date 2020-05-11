@@ -26,10 +26,10 @@ function process(r::JSONRPC.Request{Val{Symbol("workspace/didChangeWatchedFiles"
                         deletedocument!(server, URI2(uri))
                         continue
                     end
-        
+
                     set_text!(doc, content)
                     set_is_workspace_file(doc, true)
-                    parse_all(doc, server)    
+                    parse_all(doc, server)
                 end
             else
                 filepath = uri2filepath(uri)
@@ -41,7 +41,7 @@ function process(r::JSONRPC.Request{Val{Symbol("workspace/didChangeWatchedFiles"
                     isa(err, Base.IOError) || isa(err, Base.SystemError) || rethrow()
                     continue
                 end
-    
+
                 doc = Document(uri, content, true, server)
                 setdocument!(server, URI2(uri), doc)
                 parse_all(doc, server)
@@ -79,7 +79,7 @@ function request_julia_config(server::LanguageServerInstance)
         ConfigurationItem(missing, "julia.format.indents"),
         ConfigurationItem(missing, "julia.format.ops"),
         ConfigurationItem(missing, "julia.format.tuples"),
-        ConfigurationItem(missing, "julia.format.curly"), 
+        ConfigurationItem(missing, "julia.format.curly"),
         ConfigurationItem(missing, "julia.format.call"),
         ConfigurationItem(missing, "julia.format.iterOps"),
         ConfigurationItem(missing, "julia.format.comments"),
@@ -130,8 +130,8 @@ function process(r::JSONRPC.Request{Val{Symbol("workspace/didChangeWorkspaceFold
 end
 
 
-JSONRPC.parse_params(::Type{Val{Symbol("workspace/symbol")}}, params) = WorkspaceSymbolParams(params) 
-function process(r::JSONRPC.Request{Val{Symbol("workspace/symbol")},WorkspaceSymbolParams}, server) 
+JSONRPC.parse_params(::Type{Val{Symbol("workspace/symbol")}}, params) = WorkspaceSymbolParams(params)
+function process(r::JSONRPC.Request{Val{Symbol("workspace/symbol")},WorkspaceSymbolParams}, server)
     syms = SymbolInformation[]
     for doc in getdocuments_value(server)
         bs = collect_toplevel_bindings_w_loc(getcst(doc), query = r.params.query)

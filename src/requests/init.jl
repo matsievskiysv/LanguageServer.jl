@@ -37,7 +37,7 @@ function isjuliabasedir(path)
         if "base" in fs && isdir(joinpath(path, "base"))
             return isjuliabasedir(joinpath(path, "base"))
         end
-        return all(f -> f in fs, ["coreimg.jl", "coreio.jl", "inference.jl"])
+        return all(f->f in fs, ["coreimg.jl", "coreio.jl", "inference.jl"])
     catch err
         isa(err, Base.IOError) || isa(err, Base.SystemError) || rethrow()
         return false
@@ -134,7 +134,7 @@ function process(r::JSONRPC.Request{Val{Symbol("initialize")},InitializeParams},
             push!(server.workspaceFolders, uri2filepath(wksp.uri))
         end
     end
-    
+
     if !ismissing(r.params.capabilities.window) && r.params.capabilities.window.workDoneProgress
         server.clientcapability_window_workdoneprogress = true
     else
@@ -154,7 +154,7 @@ end
 
 JSONRPC.parse_params(::Type{Val{Symbol("initialized")}}, params) = params
 function process(r::JSONRPC.Request{Val{Symbol("initialized")}}, server)
-    server.status=:running
+    server.status = :running
 
     if server.clientcapability_workspace_didChangeConfiguration
         JSONRPCEndpoints.send_request(
@@ -170,7 +170,7 @@ function process(r::JSONRPC.Request{Val{Symbol("initialized")}}, server)
         end
     end
     request_julia_config(server)
-    
+
     if server.number_of_outstanding_symserver_requests > 0
         create_symserver_progress_ui(server)
     end
@@ -183,7 +183,7 @@ function process(r::JSONRPC.Request{Val{Symbol("shutdown")}}, server)
 end
 
 JSONRPC.parse_params(::Type{Val{Symbol("exit")}}, params) = params
-function process(r::JSONRPC.Request{Val{Symbol("exit")}}, server::LanguageServerInstance) 
+function process(r::JSONRPC.Request{Val{Symbol("exit")}}, server::LanguageServerInstance)
     server.symbol_server.process isa Base.Process && kill(server.symbol_server.process)
     exit()
 end

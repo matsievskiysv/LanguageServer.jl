@@ -5,20 +5,20 @@ const Range = LanguageServer.Range
 
 @testset "LanguageServer" begin
 
-@testset "document" begin
-include("test_document.jl")
-end
-@testset "communication" begin
-include("test_communication.jl")
-end
-@testset "hover" begin
-include("test_hover.jl")
-end
-@testset "edit" begin
-include("text_edit.jl")
-end
-@testset "actions" begin
-include("test_actions.jl")
-end
+    @testset "document" begin
+        include("test_document.jl")
+    end
+    @testset "communication" begin
+        include("test_communication.jl")
+    end
+    @testset "hover" begin
+        include("test_hover.jl")
+    end
+    @testset "edit" begin
+        include("text_edit.jl")
+    end
+    @testset "actions" begin
+        include("test_actions.jl")
+    end
 
 end
