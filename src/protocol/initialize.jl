@@ -116,7 +116,7 @@ function InitializeParams(dict::Dict)
     ClientCapabilities(dict["capabilities"]), 
     haskey(dict, "trace") ? String(dict["trace"]) : missing ,
     !haskey(dict, "workspaceFolders") ? missing : dict["workspaceFolders"] === nothing ? nothing : WorkspaceFolder.(dict["workspaceFolders"]),
-    haskey(dict, "workDoneToken") ? ProgressToken(dict["workDoneToken"]) : missing)
+    haskey(dict, "workDoneToken") ? dict["workDoneToken"] : missing)
 end
 ##############################################################################
 
